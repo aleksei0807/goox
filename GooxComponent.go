@@ -1,7 +1,7 @@
 package goox
 
 type GooxComponent struct {
-	TagName string
+	Tagname string
 	Text string
 	Attributes map[string]string
 	Styles map[string]string
