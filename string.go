@@ -5,8 +5,11 @@ import (
 )
 
 func (gooxComponent GooxComponent) String() string {
-	if gooxComponent.Text != "" {
+	if gooxComponent.Text != "" && gooxComponent.Tagname == "" {
 		return gooxComponent.Text
+	}
+	if gooxComponent.Tagname == "" {
+		return ""
 	}
 	result := "<"
 	result = myutils.Concat(result, gooxComponent.Tagname)
@@ -31,13 +34,15 @@ func (gooxComponent GooxComponent) String() string {
 		result = myutils.Concat(result, ">")
 	}
 
+	if (gooxComponent.Text != "") {
+		result = myutils.Concat(result, gooxComponent.Text)
+	}
+
 	if len(gooxComponent.Childs) > 0 {
 		for _, v := range gooxComponent.Childs {
 			result = myutils.Concat(result, v.String())
 		}
 	}
-	if (gooxComponent.Tagname != "!DOCTYPE html") {
-		result = myutils.Concat(result, "</", gooxComponent.Tagname, ">")
-	}
+	result = myutils.Concat(result, "</", gooxComponent.Tagname, ">")
 	return result
 }

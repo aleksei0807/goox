@@ -10,67 +10,58 @@ import (
 
 func main() {
 	myComponent := goox.GooxComponent{
-		Tagname: "!DOCTYPE html",
+		Tagname: "html",
 		Childs: []goox.GooxComponent{
 			goox.GooxComponent{
-				Tagname: "html",
+				Tagname: "head",
 				Childs: []goox.GooxComponent{
 					goox.GooxComponent{
-						Tagname: "head",
-						Childs: []goox.GooxComponent{
-							goox.GooxComponent{
-								Tagname: "meta",
-								Attributes: map[string]string{
-									"charset": "utf-8",
-								},
-							},
+						Tagname: "meta",
+						Attributes: map[string]string{
+							"charset": "utf-8",
 						},
 					},
+				},
+			},
+			goox.GooxComponent{
+				Tagname: "body",
+				Childs: []goox.GooxComponent{
 					goox.GooxComponent{
-						Tagname: "body",
+						Tagname: "div",
+						Attributes: map[string]string{
+							"class": "root",
+							"id": "root",
+							"data-my": "my",
+						},
+						Styles: map[string]string{
+							"background-color": "#fafafa",
+							"color": "#3333bf",
+							"font-size": "15px",
+							"font-weight": "300",
+							"line-height": "1",
+						},
 						Childs: []goox.GooxComponent{
 							goox.GooxComponent{
-								Tagname: "div",
+								Tagname: "span",
 								Attributes: map[string]string{
-									"class": "root",
-									"id": "root",
-									"data-my": "my",
+									"class": "my-span",
 								},
-								Styles: map[string]string{
-									"background-color": "#fafafa",
-									"color": "#3333bf",
-									"font-size": "15px",
-									"font-weight": "300",
-									"line-height": "1",
+								Text: "текст в спане",
+							},
+							goox.GooxComponent{
+								Tagname: "br",
+							},
+							goox.GooxComponent{
+								Tagname: "span",
+								Attributes: map[string]string{
+									"class": "my-span2",
 								},
 								Childs: []goox.GooxComponent{
 									goox.GooxComponent{
-										Tagname: "span",
-										Attributes: map[string]string{
-											"class": "my-span",
-										},
-										Childs: []goox.GooxComponent{
-											goox.GooxComponent{
-												Text: "просто текст",
-											},
-										},
+										Text: "просто текст 2, ",
 									},
 									goox.GooxComponent{
-										Tagname: "br",
-									},
-									goox.GooxComponent{
-										Tagname: "span",
-										Attributes: map[string]string{
-											"class": "my-span2",
-										},
-										Childs: []goox.GooxComponent{
-											goox.GooxComponent{
-												Text: "просто текст 2, ",
-											},
-											goox.GooxComponent{
-												Text: "просто текст 3",
-											},
-										},
+										Text: "просто текст 3",
 									},
 								},
 							},
@@ -85,7 +76,7 @@ func main() {
 	r := fasthttprouter.New()
 	r.GET("/", func(ctx *fasthttp.RequestCtx) {
 		ctx.SetContentType("text/html")
-		fmt.Fprintf(ctx, "%v", myComponent)
+		fmt.Fprintf(ctx, "<!DOCTYPE html>%v", myComponent)
 	})
 	log.Printf("serve on %s", ":9999")
 	fasthttp.ListenAndServe(":9999", r.Handler)
