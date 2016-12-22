@@ -27,7 +27,7 @@ func (gooxComponent GooxComponent) String() string {
 	}
 
 	/* TODO add list single tags */
-	if (gooxComponent.Tagname == "meta" || gooxComponent.Tagname == "br") {
+	if (selfClosing[gooxComponent.Tagname]) {
 		result = myutils.Concat(result, "/>")
 		return result
 	} else {
